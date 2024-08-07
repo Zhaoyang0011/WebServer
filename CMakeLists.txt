@@ -22,13 +22,10 @@ include_directories(./src)
 option(BUILD_TEST "ON for complile test" ON)
 
 set(LIB_SRC
-        #        src/log/AsyncLogger.cpp
-        #        src/log/FixedBuffer.cpp
         src/thread/Thread.cpp
+        src/thread/ThreadPool.cpp
         src/thread/CurrentThread.cpp
         src/util/CountDownLatch.cpp
-        src/base/Exception.h
-        #        src/thread/ThreadPool.cpp
 )
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)

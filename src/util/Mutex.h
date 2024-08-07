@@ -6,6 +6,7 @@
 #define WEBSERVER_SRC_UTIL_MUTEX_H_
 
 #include <pthread.h>
+#include <cassert>
 #include "thread/CurrentThread.h"
 #include "base/NonCopyable.h"
 
@@ -30,6 +31,12 @@ class MutexLock {
   }
   void assignHolder() {
     _threadId = CurrentThread::tid();
+  }
+  [[nodiscard]] bool isLockedByThisThread() const {
+    return _threadId == CurrentThread::tid();
+  }
+  void assertLocked() const {
+    assert(isLockedByThisThread());
   }
  private:
   friend class Condition;

@@ -9,13 +9,14 @@ void *startThread(void *obj) {
   return nullptr;
 }
 
-zyweb::Thread::Thread(ThreadFunc func, std::string name) : _started(false),
-                                                           _joined(false),
-                                                           _pthreadId(0),
-                                                           _tid(0),
-                                                           _func(std::move(func)),
-                                                           _name(std::move(name)),
-                                                           _latch(1) {
+zyweb::Thread::Thread(ThreadFunc func, std::string name) :
+    _started(false),
+    _joined(false),
+    _pthreadId(0),
+    _tid(0),
+    _func(std::move(func)),
+    _name(std::move(name)),
+    _latch(1) {
 
 }
 zyweb::Thread::~Thread() {
@@ -27,8 +28,8 @@ void zyweb::Thread::start() {
   assert(!_started);
   _started = true;
   // FIXME: move(func_)
-  ThreadData *data = new ThreadData(_func, _name, &_tid, &_latch);
-  if (pthread_create(&_pthreadId, NULL, &startThread, data)) {
+  auto *data = new ThreadData(_func, _name, &_tid, &_latch);
+  if (pthread_create(&_pthreadId, nullptr, &startThread, data)) {
     _started = false;
     delete data;
 //    LOG_SYSFATAL << "Failed in pthread_create";

@@ -1,7 +1,3 @@
-//
-// Created by szy on 7/19/24.
-//
-
 #ifndef _THREADPOOL_H
 #define _THREADPOOL_H
 
@@ -18,4 +14,4 @@ class ThreadPool : NonCopyable {
 
 }
 
-#endif //WEBSERVER_SRC_THREAD_THREADPOOL_H_
+#endif

@@ -2,11 +2,20 @@
 // Created by szy on 7/19/24.
 //
 
-#ifndef WEBSERVER_SRC_THREAD_THREADPOOL_H_
-#define WEBSERVER_SRC_THREAD_THREADPOOL_H_
+#ifndef _THREADPOOL_H
+#define _THREADPOOL_H
 
-class ThreadPool {
+#include <functional>
+#include "base/NonCopyable.h"
+
+namespace zyweb {
+
+class ThreadPool : NonCopyable {
+ public:
+  typedef std::function<void()> Task;
 
 };
+
+}
 
 #endif //WEBSERVER_SRC_THREAD_THREADPOOL_H_

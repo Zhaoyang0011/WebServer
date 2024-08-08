@@ -2,9 +2,7 @@
 #include <cxxabi.h>
 #include "CurrentThread.h"
 
-namespace zyweb {
-
-namespace CurrentThread {
+namespace zyweb::CurrentThread {
 
 __thread int t_cachedTid = 0;
 __thread char t_tidString[32];
@@ -72,4 +70,3 @@ string stackTrace(bool demangle) {
 
 }
 
-}

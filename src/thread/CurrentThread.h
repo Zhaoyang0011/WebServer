@@ -9,9 +9,7 @@
 #include <sys/syscall.h>
 #include "base/types.h"
 
-namespace zyweb {
-
-namespace CurrentThread {
+namespace zyweb::CurrentThread {
 
 // internal
 extern __thread int t_cachedTid;
@@ -48,8 +46,8 @@ void sleepUsec(int64_t usec);
 
 string stackTrace(bool demangle);
 
-}  // namespace CurrentThread
+} // namespace zyweb::CurrentThread
 
-}
+
 
 #endif

@@ -106,7 +106,6 @@ void ThreadPool::runInThread() {
 }
 
 ThreadPool::Task ThreadPool::take() {
-
   MutexLockGuard lock(_mutex);
   // always use a while-loop, due to spurious wakeup
   while (_queue.empty() && _running) {

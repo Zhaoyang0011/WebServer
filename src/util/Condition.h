@@ -20,8 +20,7 @@ class Condition : NonCopyable {
     pthread_cond_destroy(&_pcond);
   }
 
-  void wait()
-  {
+  void wait() {
     MutexLock::UnassignGuard ug(_mutex);
     pthread_cond_wait(&_pcond, _mutex.getPthreadMutex());
   }

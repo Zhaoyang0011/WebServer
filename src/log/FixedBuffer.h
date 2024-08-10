@@ -5,6 +5,7 @@
 #include <cstring>
 #include <string>
 #include "base/NonCopyable.h"
+#include "base/types.h"
 
 namespace zyweb {
 
@@ -42,8 +43,6 @@ class FixedBuffer : NonCopyable {
   void reset() { _current = _data; }
   void bzero() { memset(_data, 0, sizeof _data); }
 
-  // for used by GDB
-  const char *debugString();
   void setCookie(void (*cookie)()) { _cookie = cookie; }
   // for used by unit test
 

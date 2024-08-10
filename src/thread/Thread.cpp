@@ -16,9 +16,8 @@ zyweb::Thread::Thread(ThreadFunc func, std::string name) :
     _tid(0),
     _func(std::move(func)),
     _name(std::move(name)),
-    _latch(1) {
+    _latch(1) {}
 
-}
 zyweb::Thread::~Thread() {
   if (_started && !_joined) {
     pthread_detach(_pthreadId);

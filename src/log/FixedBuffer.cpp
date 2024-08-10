@@ -3,3 +3,15 @@
 //
 
 #include "FixedBuffer.h"
+
+using namespace zyweb;
+
+template<int SIZE>
+void FixedBuffer<SIZE>::cookieEnd() {
+
+}
+
+template<int SIZE>
+void FixedBuffer<SIZE>::cookieStart() {
+
+}

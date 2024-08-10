@@ -22,10 +22,12 @@ include_directories(./src)
 option(BUILD_TEST "ON for complile test" ON)
 
 set(LIB_SRC
+        src/util/CountDownLatch.cpp
         src/thread/Thread.cpp
         src/thread/ThreadPool.cpp
         src/thread/CurrentThread.cpp
-        src/util/CountDownLatch.cpp
+        src/log/FixedBuffer.cpp
+        src/log/AsyncLogger.cpp
 )
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
@@ -33,8 +35,8 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 add_library(WebServerLib STATIC ${LIB_SRC})
 
-add_executable(FixedBuffer_test test/log/FixedBuffer_test.cpp)
-target_link_libraries(FixedBuffer_test WebServerLib)
-
 add_executable(Thread_test test/thread/Thread_test.cpp)
 target_link_libraries(Thread_test WebServerLib)
+
+add_executable(FixedBuffer_test test/log/FixedBuffer_test.cpp)
+target_link_libraries(FixedBuffer_test WebServerLib)

@@ -9,7 +9,12 @@
 
 namespace zyweb {
 
-  using std::string;
+using std::string;
+
+template<typename To, typename From>
+inline To implicit_cast(From const &f) {
+  return f;
+}
 
 }
 

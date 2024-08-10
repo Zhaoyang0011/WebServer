@@ -1,9 +1,5 @@
-//
-// Created by szy on 7/19/24.
-//
-
-#ifndef WEBSERVER_SRC_UTIL_MUTEX_H_
-#define WEBSERVER_SRC_UTIL_MUTEX_H_
+#ifndef UTIL_MUTEX_H_
+#define UTIL_MUTEX_H_
 
 #include <pthread.h>
 #include <cassert>

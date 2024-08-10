@@ -1,5 +1,5 @@
-#ifndef _FIXED_BUFFER_H
-#define _FIXED_BUFFER_H
+#ifndef LOG_FIXED_BUFFER_H
+#define LOG_FIXED_BUFFER_H
 
 #include <cstddef>
 #include <cstring>

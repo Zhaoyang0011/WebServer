@@ -2,8 +2,8 @@
 // Created by szy on 8/7/24.
 //
 
-#ifndef _EXCEPTION_H_
-#define _EXCEPTION_H_
+#ifndef BASE_EXCEPTION_H_
+#define BASE_EXCEPTION_H_
 
 #include <exception>
 #include "base/types.h"

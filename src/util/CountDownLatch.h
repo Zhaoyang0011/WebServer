@@ -2,8 +2,8 @@
 // Created by szy on 8/7/24.
 //
 
-#ifndef _COUNTDOWNLATCH_H_
-#define _COUNTDOWNLATCH_H_
+#ifndef UTIL_COUNTDOWNLATCH_H_
+#define UTIL_COUNTDOWNLATCH_H_
 
 #include "util/Mutex.h"
 #include "util/Condition.h"

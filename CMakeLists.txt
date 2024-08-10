@@ -22,12 +22,19 @@ include_directories(./src)
 option(BUILD_TEST "ON for complile test" ON)
 
 set(LIB_SRC
+        src/base/Timestamp.cpp
         src/util/CountDownLatch.cpp
         src/thread/Thread.cpp
         src/thread/ThreadPool.cpp
         src/thread/CurrentThread.cpp
         src/log/FixedBuffer.cpp
         src/log/AsyncLogger.cpp
+        src/Timer.cpp
+        src/EventLoop.cpp
+        src/Channel.cpp
+        src/poller/Poller.cpp
+        src/poller/DefaultPoller.cpp
+        src/poller/EpollPoller.cpp
 )
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)

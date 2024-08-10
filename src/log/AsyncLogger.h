@@ -1,5 +1,5 @@
-#ifndef _LOG_ASYNCLOGGER_H
-#define _LOG_ASYNCLOGGER_H
+#ifndef LOG_ASYNCLOGGER_H
+#define LOG_ASYNCLOGGER_H
 
 #include <cstdio>
 #include <string>

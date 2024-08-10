@@ -2,8 +2,8 @@
 // Created by szy on 8/7/24.
 //
 
-#ifndef _CURRENTTHREAD_H_
-#define _CURRENTTHREAD_H_
+#ifndef THREAD_CURRENTTHREAD_H_
+#define THREAD_CURRENTTHREAD_H_
 
 #include <csignal>
 #include <sys/syscall.h>

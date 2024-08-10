@@ -1,9 +1,5 @@
-//
-// Created by szy on 8/7/24.
-//
-
-#ifndef _CONDITION_H_
-#define _CONDITION_H_
+#ifndef UTIL_CONDITION_H_
+#define UTIL_CONDITION_H_
 
 #include "util/Mutex.h"
 #include "base/NonCopyable.h"

@@ -1,5 +1,5 @@
-#ifndef _BASE_NONCOPYABLE_H
-#define _BASE_NONCOPYABLE_H
+#ifndef BASE_NONCOPYABLE_H
+#define BASE_NONCOPYABLE_H
 
 namespace zyweb {
 

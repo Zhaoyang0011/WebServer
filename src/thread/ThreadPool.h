@@ -1,5 +1,5 @@
-#ifndef _THREADPOOL_H
-#define _THREADPOOL_H
+#ifndef THREAD_POOL_H_
+#define THREAD_POOL_H_
 
 #include <functional>
 #include <deque>

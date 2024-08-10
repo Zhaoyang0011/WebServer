@@ -2,8 +2,8 @@
 // Created by szy on 7/19/24.
 //
 
-#ifndef _THREAD_H
-#define _THREAD_H
+#ifndef THREAD_H_
+#define THREAD_H_
 
 #include <atomic>
 #include <functional>

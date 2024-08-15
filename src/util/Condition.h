@@ -31,7 +31,7 @@ class Condition : NonCopyable {
 
  private:
   MutexLock &_mutex;
-  pthread_cond_t _pcond;
+  pthread_cond_t _pcond{};
 };
 
 }

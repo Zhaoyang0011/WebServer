@@ -132,9 +132,9 @@ class EventLoop : NonCopyable {
   Channel *_currentActiveChannel;
 
   mutable MutexLock _mutex;
-  std::vector<Functor> pendingFunctors_;
+  std::vector<Functor> _pendingFunctors;
 };
 
 }
 
-#endif //WEBSERVER_SRC_EVENTLOOP_H_
+#endif

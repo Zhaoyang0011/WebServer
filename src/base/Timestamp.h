@@ -44,7 +44,7 @@ class Timestamp {
   ///
   static Timestamp now();
   static Timestamp invalid() {
-    return Timestamp();
+    return {};
   }
 
   static Timestamp fromUnixTime(time_t t) {
@@ -88,7 +88,7 @@ inline double timeDifference(Timestamp high, Timestamp low) {
 /// @return timestamp+seconds as Timestamp
 ///
 inline Timestamp addTime(Timestamp timestamp, double seconds) {
-  int64_t delta = static_cast<int64_t>(seconds * Timestamp::kMicroSecondsPerSecond);
+  auto delta = static_cast<int64_t>(seconds * Timestamp::kMicroSecondsPerSecond);
   return Timestamp(timestamp.microSecondsSinceEpoch() + delta);
 }
 

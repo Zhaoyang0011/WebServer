@@ -35,6 +35,9 @@ class MutexLock {
     assert(isLockedByThisThread());
   }
  private:
+  pthread_mutex_t _mutexLock{};
+  pid_t _threadId;
+
   friend class Condition;
   class UnassignGuard : NonCopyable {
    public:
@@ -50,8 +53,6 @@ class MutexLock {
    private:
     MutexLock &_owner;
   };
-  pthread_mutex_t _mutexLock;
-  pid_t _threadId;
 };
 
 class MutexLockGuard {

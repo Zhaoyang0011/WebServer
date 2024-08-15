@@ -6,6 +6,7 @@
 #define TIMER_H_
 
 #include <atomic>
+#include <memory>
 #include "base/NonCopyable.h"
 #include "base/Timestamp.h"
 
@@ -40,7 +41,6 @@ class Timer : NonCopyable {
   const int64_t _sequence;
 
   static std::atomic<int64_t> s_numCreated;
-
 };
 
 }

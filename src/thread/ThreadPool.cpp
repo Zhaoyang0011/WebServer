@@ -45,8 +45,8 @@ void ThreadPool::stop() {
     _notFull.notifyAll();
   }
 
-  for (auto &thr : _threads) {
-    thr->join();
+  for (auto &thread : _threads) {
+    thread->join();
   }
 }
 

@@ -27,14 +27,17 @@ set(LIB_SRC
         src/thread/Thread.cpp
         src/thread/ThreadPool.cpp
         src/thread/CurrentThread.cpp
+        src/log/Logger.cpp
         src/log/FixedBuffer.cpp
         src/log/AsyncLogger.cpp
-        src/Timer.cpp
-        src/EventLoop.cpp
-        src/Channel.cpp
         src/poller/Poller.cpp
         src/poller/DefaultPoller.cpp
         src/poller/EpollPoller.cpp
+#        src/TimerQueue.cpp
+        src/Timer.cpp
+        src/EventLoop.cpp
+        src/Channel.cpp
+        src/TimerQueue.cpp
 )
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
@@ -47,3 +50,9 @@ target_link_libraries(Thread_test WebServerLib)
 
 add_executable(FixedBuffer_test test/log/FixedBuffer_test.cpp)
 target_link_libraries(FixedBuffer_test WebServerLib)
+
+add_executable(TimerQueue_test test/TimerQueue_test.cpp)
+target_link_libraries(TimerQueue_test WebServerLib)
+
+add_executable(EventLoop_test1 test/event_loop/test1.cpp)
+target_link_libraries(EventLoop_test1 WebServerLib)

@@ -33,10 +33,11 @@ set(LIB_SRC
         src/poller/Poller.cpp
         src/poller/DefaultPoller.cpp
         src/poller/EpollPoller.cpp
-#        src/TimerQueue.cpp
-        src/Timer.cpp
-        src/EventLoop.cpp
         src/Channel.cpp
+        src/EventLoop.cpp
+        src/EventLoopThread.cpp
+        src/EventLoopThreadPool.cpp
+        src/Timer.cpp
         src/TimerQueue.cpp
 )
 
@@ -53,6 +54,9 @@ target_link_libraries(FixedBuffer_test WebServerLib)
 
 add_executable(TimerQueue_test test/TimerQueue_test.cpp)
 target_link_libraries(TimerQueue_test WebServerLib)
+
+add_executable(EventLoopThread_test test/EventLoopThread_test.cpp)
+target_link_libraries(EventLoopThread_test WebServerLib)
 
 add_executable(EventLoop_test1 test/event_loop/test1.cpp)
 target_link_libraries(EventLoop_test1 WebServerLib)

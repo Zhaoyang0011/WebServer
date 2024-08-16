@@ -1,6 +1,7 @@
 #include <execinfo.h>
 #include <cxxabi.h>
 #include "CurrentThread.h"
+#include "base/Timestamp.h"
 
 namespace zyweb::CurrentThread {
 
@@ -66,6 +67,13 @@ string stackTrace(bool demangle) {
     free(strings);
   }
   return stack;
+}
+
+void sleepUsec(int64_t usec) {
+  struct timespec ts = {0, 0};
+  ts.tv_sec = static_cast<time_t>(usec / Timestamp::kMicroSecondsPerSecond);
+  ts.tv_nsec = static_cast<long>(usec % Timestamp::kMicroSecondsPerSecond * 1000);
+  ::nanosleep(&ts, nullptr);
 }
 
 }

@@ -2,6 +2,10 @@
 #include <utility>
 #include "Thread.h"
 
+using namespace zyweb;
+
+std::atomic<int> Thread::_numCreated;
+
 void *startThread(void *obj) {
   auto *data = static_cast<zyweb::ThreadData *>(obj);
   data->runInThread();
@@ -9,7 +13,7 @@ void *startThread(void *obj) {
   return nullptr;
 }
 
-zyweb::Thread::Thread(ThreadFunc func, std::string name) :
+Thread::Thread(ThreadFunc func, std::string name) :
     _started(false),
     _joined(false),
     _pthreadId(0),
@@ -18,12 +22,13 @@ zyweb::Thread::Thread(ThreadFunc func, std::string name) :
     _name(std::move(name)),
     _latch(1) {}
 
-zyweb::Thread::~Thread() {
+Thread::~Thread() {
   if (_started && !_joined) {
     pthread_detach(_pthreadId);
   }
 }
-void zyweb::Thread::start() {
+
+void Thread::start() {
   assert(!_started);
   _started = true;
   // FIXME: move(func_)
@@ -38,14 +43,14 @@ void zyweb::Thread::start() {
   }
 }
 
-int zyweb::Thread::join() {
+int Thread::join() {
   assert(_started);
   assert(!_joined);
   _joined = true;
   return pthread_join(_pthreadId, nullptr);
 }
 
-void zyweb::Thread::setDefaultName() {
+void Thread::setDefaultName() {
   int num = ++_numCreated;
   if (_name.empty()) {
     char buf[32];

@@ -57,6 +57,8 @@ void EventLoopThread::threadFunc() {
 
   loop.loop();
   //assert(exiting_);
-  MutexLockGuard lock(_mutex);
-  _loop = nullptr;
+  {
+    MutexLockGuard lock(_mutex);
+    _loop = nullptr;
+  }
 }

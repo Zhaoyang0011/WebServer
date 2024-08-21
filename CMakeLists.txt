@@ -27,6 +27,10 @@ set(LIB_SRC
         src/thread/Thread.cpp
         src/thread/ThreadPool.cpp
         src/thread/CurrentThread.cpp
+        src/coroutine/fcontext/fcontext.S
+        src/coroutine/fcontext/fcontext.h
+        src/coroutine/Coroutine.cpp
+        #        src/coroutine/CoroutineScheduler.cpp
         src/log/Logger.cpp
         src/log/FixedBuffer.cpp
         src/log/AsyncLogger.cpp
@@ -39,6 +43,9 @@ set(LIB_SRC
         src/EventLoopThreadPool.cpp
         src/Timer.cpp
         src/TimerQueue.cpp
+        test/coroutine/coroutine_test.cpp
+        #        src/Socket.cpp
+        #        src/InternetAddress.cpp
 )
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
@@ -60,3 +67,9 @@ target_link_libraries(EventLoopThread_test WebServerLib)
 
 add_executable(EventLoop_test1 test/event_loop/test1.cpp)
 target_link_libraries(EventLoop_test1 WebServerLib)
+
+add_executable(Coroutine_test test/coroutine/coroutine_test.cpp)
+target_link_libraries(Coroutine_test WebServerLib)
+
+#add_executable(raw_epoll_echo_test test/raw_epoll_echo_test.cpp)
+#target_link_libraries(raw_epoll_echo_test WebServerLib)

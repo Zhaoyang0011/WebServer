@@ -35,7 +35,6 @@ class EventLoopThreadPool : NonCopyable {
   const string &name() const { return _name; }
 
  private:
-
   EventLoop *_baseLoop;
   string _name;
   bool _started;
@@ -43,7 +42,6 @@ class EventLoopThreadPool : NonCopyable {
   int _next;
   std::vector<std::unique_ptr<EventLoopThread>> _threads;
   std::vector<EventLoop *> _loops;
-
 };
 
 }

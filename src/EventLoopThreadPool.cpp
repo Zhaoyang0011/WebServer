@@ -51,7 +51,6 @@ EventLoop *EventLoopThreadPool::getNextLoop() {
 EventLoop *EventLoopThreadPool::getLoopForHash(size_t hashCode) {
   _baseLoop->assertInLoopThread();
   EventLoop *loop = _baseLoop;
-
   if (!_loops.empty()) {
     loop = _loops[hashCode % _loops.size()];
   }

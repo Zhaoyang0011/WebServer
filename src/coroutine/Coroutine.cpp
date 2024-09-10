@@ -22,30 +22,30 @@ uint64_t Coroutine::GetCurrentId() {
 }
 
 Coroutine::Coroutine() {
-  _state = EXEC;
+  state_ = EXEC;
   SetThis(this);
   ++coroutine_count;
 }
 
 Coroutine::Coroutine(std::function<void()> cb, size_t stacksize, bool use_caller)
-    : _id(++coroutine_id),
-      _cb(std::move(cb)) {
+    : id_(++coroutine_id),
+      cb_(std::move(cb)) {
   ++coroutine_count;
-  _stacksize = stacksize;
+  stack_size_ = stacksize;
   if (!use_caller) {
-    _ctx = make_fcontext((char *)_stack + _stacksize, _stacksize, &Coroutine::MainFunc);
+    ctx_ = make_fcontext((char *)stack_ + stack_size_, stack_size_, &Coroutine::MainFunc);
   } else {
-    _ctx = make_fcontext((char *)_stack + _stacksize, _stacksize, &Coroutine::CallerMainFunc);
+    ctx_ = make_fcontext((char *)stack_ + stack_size_, stack_size_, &Coroutine::CallerMainFunc);
   }
 }
 
 Coroutine::~Coroutine() {
   --coroutine_count;
-  if (_stacksize) {
-    assert(_state == TERM || _state == EXCEPT || _state == INIT);
+  if (stack_size_) {
+    assert(state_ == TERM || state_ == EXCEPT || state_ == INIT);
   } else {
-    assert(!_cb);
-    assert(_state == EXEC);
+    assert(!cb_);
+    assert(state_ == EXEC);
 
     Coroutine *cur = cur_coroutine;
     if (cur == this) {
@@ -55,38 +55,36 @@ Coroutine::~Coroutine() {
 }
 
 void Coroutine::reset(std::function<void()> cb) {
-  assert(_stack);
-  assert(_state == TERM || _state == EXCEPT || _state == INIT);
-  _cb = std::move(cb);
+  assert(stack_);
+  assert(state_ == TERM || state_ == EXCEPT || state_ == INIT);
+  cb_ = std::move(cb);
 
-  _ctx = make_fcontext((char *)_stack + _stacksize, _stacksize, &MainFunc);
+  ctx_ = make_fcontext((char *)stack_ + stack_size_, stack_size_, &MainFunc);
 
-  _state = INIT;
+  state_ = INIT;
 }
 
 void Coroutine::swapIn() {
   SetThis(this);
-  assert(_state != EXEC);
-  _state = EXEC;
-  jump_fcontext(&thread_coroutine->_ctx, _ctx, 0);
+  assert(state_ != EXEC);
+  state_ = EXEC;
+  jump_fcontext(&thread_coroutine->ctx_, ctx_, 0);
 }
 
 void Coroutine::swapOut() {
   SetThis(thread_coroutine.get());
-  assert(_state != EXEC);
-  _state = EXEC;
-  jump_fcontext(&_ctx, thread_coroutine->_ctx, 0);
+  jump_fcontext(&ctx_, thread_coroutine->ctx_, 0);
 }
 
 void Coroutine::resume() {
   SetThis(this);
-  _state = EXEC;
-  jump_fcontext(&thread_coroutine->_ctx, _ctx, 0);
+  state_ = EXEC;
+  jump_fcontext(&thread_coroutine->ctx_, ctx_, 0);
 }
 
 void Coroutine::yield() {
   SetThis(thread_coroutine.get());
-  jump_fcontext(&_ctx, thread_coroutine->_ctx, 0);
+  jump_fcontext(&ctx_, thread_coroutine->ctx_, 0);
 }
 
 Coroutine *Coroutine::NewCoroutine() {
@@ -107,22 +105,24 @@ std::shared_ptr<Coroutine> Coroutine::GetThis() {
   if (cur_coroutine) {
     return cur_coroutine->shared_from_this();
   }
-  std::shared_ptr<Coroutine> main_fiber(NewCoroutine());
+  NewCoroutine();
+  std::shared_ptr<Coroutine> main_fiber(cur_coroutine);
+  assert(cur_coroutine == main_fiber.get());
   thread_coroutine = main_fiber;
   return cur_coroutine->shared_from_this();
 }
 
 void Coroutine::YieldToReady() {
   auto cur = GetThis();
-  assert(cur->_stacksize == EXEC);
-  cur->_stacksize = READY;
+  assert(cur->state_ == EXEC);
+  cur->state_ = READY;
   cur->swapOut();
 }
 
 void Coroutine::YieldToHold() {
   auto cur = GetThis();
-  assert(cur->_stacksize == EXEC);
-  cur->_stacksize = HOLD;
+  assert(cur->state_ == EXEC);
+  cur->state_ = HOLD;
   cur->swapOut();
 }
 
@@ -134,17 +134,17 @@ void Coroutine::MainFunc(intptr_t vp) {
   auto cur = GetThis();
   assert(cur);
   try {
-    cur->_cb();
-    cur->_cb = nullptr;
-    cur->_state = TERM;
+    cur->cb_();
+    cur->cb_ = nullptr;
+    cur->state_ = TERM;
   } catch (std::exception &ex) {
-    cur->_state = EXCEPT;
+    cur->state_ = EXCEPT;
   } catch (...) {
-    cur->_state = EXCEPT;
+    cur->state_ = EXCEPT;
   }
   auto raw_ptr = cur.get();
   cur.reset();
-  raw_ptr->swapOut();
+  raw_ptr->yield();
   assert(false);
 }
 
@@ -152,13 +152,13 @@ void Coroutine::CallerMainFunc(intptr_t vp) {
   auto cur = GetThis();
   assert(cur);
   try {
-    cur->_cb();
-    cur->_cb = nullptr;
-    cur->_state = TERM;
+    cur->cb_();
+    cur->cb_ = nullptr;
+    cur->state_ = TERM;
   } catch (std::exception &ex) {
-    cur->_state = EXCEPT;
+    cur->state_ = EXCEPT;
   } catch (...) {
-    cur->_state = EXCEPT;
+    cur->state_ = EXCEPT;
   }
 
   auto raw_ptr = cur.get();

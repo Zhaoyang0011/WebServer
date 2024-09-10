@@ -1,4 +1,5 @@
 #include <iostream>
+#include <list>
 #include "coroutine/Coroutine.h"
 
 using namespace zyweb;
@@ -18,11 +19,11 @@ void runInCoroutine() {
 
 int main() {
   Coroutine::GetThis();
-  std::shared_ptr<Coroutine> coroutine(new Coroutine(runInCoroutine));
-
-  coroutine->resume();
-  coroutine->resume();
-  coroutine->resume();
-  coroutine->resume();
-  coroutine->resume();
+  std::shared_ptr<Coroutine> coroutine(Coroutine::NewCoroutine(runInCoroutine, 0, false));
+  coroutine->swapIn();
+  coroutine->swapIn();
+  coroutine->swapIn();
+  coroutine->swapIn();
+  coroutine->swapIn();
+  return 0;
 }

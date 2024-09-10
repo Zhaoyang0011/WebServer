@@ -10,7 +10,7 @@ namespace zyweb {
 
 class CoroutineScheduler;
 
-class Coroutine : std::enable_shared_from_this<Coroutine> {
+class Coroutine : public std::enable_shared_from_this<Coroutine> {
  public:
   /**
    * @brief 协程状态
@@ -35,7 +35,6 @@ class Coroutine : std::enable_shared_from_this<Coroutine> {
    * @attention 每个线程第一个协程的构造
    */
   Coroutine();
- public:
 
   /**
    * @brief 构造函数
@@ -45,6 +44,7 @@ class Coroutine : std::enable_shared_from_this<Coroutine> {
    */
   explicit Coroutine(std::function<void()> cb, size_t stacksize = 0, bool use_caller = false);
 
+ public:
   /**
    * @brief 析构函数
    */
@@ -85,12 +85,12 @@ class Coroutine : std::enable_shared_from_this<Coroutine> {
   /**
    * @brief 返回协程id
    */
-  uint64_t getId() const { return _id; }
+  uint64_t getId() const { return id_; }
 
   /**
    * @brief 返回协程状态
    */
-  State getState() const { return _state; }
+  State getState() const { return state_; }
  public:
 
   static Coroutine *NewCoroutine();
@@ -139,17 +139,17 @@ class Coroutine : std::enable_shared_from_this<Coroutine> {
   static uint64_t GetCurrentId();
  private:
   /// 协程id
-  uint64_t _id = 0;
+  uint64_t id_ = 0;
   /// 协程运行栈大小
-  uint32_t _stacksize = 0;
+  uint32_t stack_size_ = 0;
   /// 协程状态
-  State _state = INIT;
+  State state_ = INIT;
   /// 协程运行函数
-  std::function<void()> _cb;
+  std::function<void()> cb_;
   /// 协程上下文
-  fcontext_t _ctx = nullptr;
+  fcontext_t ctx_ = nullptr;
   /// 协程运行栈指针
-  char _stack[];
+  char stack_[];
 };
 
 }

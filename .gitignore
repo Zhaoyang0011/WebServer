@@ -1,7 +1,10 @@
 .vscode
+.cache
+.idea
 cmake-build-debug/
 lib
 bin
+build
 
 # Prerequisites
 *.d

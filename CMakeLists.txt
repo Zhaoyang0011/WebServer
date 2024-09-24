@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(WebServer CXX ASM)
 
-
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # 指定编译选项
